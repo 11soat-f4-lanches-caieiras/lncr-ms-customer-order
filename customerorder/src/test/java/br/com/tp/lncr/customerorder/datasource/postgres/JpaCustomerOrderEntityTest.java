@@ -131,28 +131,34 @@ class JpaCustomerOrderEntityTest {
     @Test
     void shouldOverwriteCreatedTimeOnMultiplePrePersistCalls() {
         JpaCustomerOrderEntity entity = new JpaCustomerOrderEntity();
+        LocalDateTime manuallySetTime = LocalDateTime.of(2020, 1, 1, 0, 0);
 
+        // Set a manual timestamp
+        entity.setCreated(manuallySetTime);
+        assertEquals(manuallySetTime, entity.getCreated());
+
+        // prePersist should overwrite with current time
         entity.prePersist();
-        LocalDateTime firstCreated = entity.getCreated();
+        LocalDateTime createdAfterPrePersist = entity.getCreated();
 
-        entity.prePersist();
-        LocalDateTime secondCreated = entity.getCreated();
-
-        assertNotEquals(firstCreated, secondCreated);
-        assertTrue(secondCreated.isAfter(firstCreated));
+        assertNotEquals(manuallySetTime, createdAfterPrePersist);
+        assertTrue(createdAfterPrePersist.isAfter(manuallySetTime));
     }
 
     @Test
     void shouldOverwriteUpdatedTimeOnMultiplePreUpdateCalls() {
         JpaCustomerOrderEntity entity = new JpaCustomerOrderEntity();
+        LocalDateTime manuallySetTime = LocalDateTime.of(2020, 1, 1, 0, 0);
 
+        // Set a manual timestamp
+        entity.setUpdated(manuallySetTime);
+        assertEquals(manuallySetTime, entity.getUpdated());
+
+        // preUpdate should overwrite with current time
         entity.preUpdate();
-        LocalDateTime firstUpdated = entity.getUpdated();
+        LocalDateTime updatedAfterPreUpdate = entity.getUpdated();
 
-        entity.preUpdate();
-        LocalDateTime secondUpdated = entity.getUpdated();
-
-        assertNotEquals(firstUpdated, secondUpdated);
-        assertTrue(secondUpdated.isAfter(firstUpdated));
+        assertNotEquals(manuallySetTime, updatedAfterPreUpdate);
+        assertTrue(updatedAfterPreUpdate.isAfter(manuallySetTime));
     }
 }
