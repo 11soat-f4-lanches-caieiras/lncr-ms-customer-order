@@ -1,4 +1,4 @@
-package br.com.tp.lncr.customerorder;
+package br.com.tp.lncr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
