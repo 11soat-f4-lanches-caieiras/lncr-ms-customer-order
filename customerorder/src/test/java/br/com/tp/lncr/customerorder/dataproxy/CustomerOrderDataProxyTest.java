@@ -1,5 +1,6 @@
 package br.com.tp.lncr.customerorder.dataproxy;
 
+import br.com.tp.lncr.commons.integrations.IntegrationMapper;
 import br.com.tp.lncr.commons.integrations.customer.CustomerIntegrationImpl;
 import br.com.tp.lncr.commons.integrations.fooditem.FoodItemIntegrationImpl;
 import br.com.tp.lncr.commons.integrations.kitchenorder.KitchenOrderIntegrationImpl;
@@ -50,6 +51,7 @@ class CustomerOrderDataProxyTest {
     private JpaCustomerOrderMapper jpaCustomerOrderMapper;
 
     private CustomerOrderDataProxy customerOrderDataProxy;
+    private IntegrationMapper integrationMapper;
 
     @BeforeEach
     void setUp() {
@@ -63,7 +65,8 @@ class CustomerOrderDataProxyTest {
                 paymentIntegration,
                 kitchenOrderIntegration,
                 notificationIntegration,
-                jpaCustomerOrderMapper
+                jpaCustomerOrderMapper,
+                integrationMapper
         );
     }
 
@@ -120,7 +123,7 @@ class CustomerOrderDataProxyTest {
         Integer customerId = 1;
         CustomerOrderCustomerDTO expectedCustomer = new CustomerOrderCustomerDTO();
 
-        Mockito.when(customerIntegration.getCustomerDetails(customerId)).thenReturn(expectedCustomer);
+        Mockito.when(integrationMapper.toCustomerOrderCustomerDTO(customerIntegration.getCustomerDetails(customerId))).thenReturn(expectedCustomer);
 
         CustomerOrderCustomerDTO result = customerOrderDataProxy.findCustomerDetails(customerId);
 
