@@ -1,6 +1,8 @@
 spring:
   application:
-    name: lncr-ms-customer-order
+    name: customerOrder
+  server:
+    port: "${SERVER_PORT:8080}"
   jackson:
     default-property-inclusion: non_null
     serialization:
@@ -23,21 +25,17 @@ management:
   endpoint:
     health:
       show-details: always
-server:
-  port: 8080
 lncr:
-  internal-url: "${LNCR_INTERNAL_URL:http://localhost:8080}"
-  external-url: "${LNCR_EXTERNAL_URL:http://localhost:8080}"
+  internalUrl: "${LNCR_ALB_URL:http://localhost:8080}"
+  externalUrl: "${LNCR_EXTERNAL_URL}"
   integration:
-    customers-url: "${lncr.internal-url}/customers"
-    customers-list-url: "${lncr.internal-url}/customers/listIds"
-    customer-orders-url: "${lncr.internal-url}/customerOrders"
-    food-items-url: "${lncr.internal-url}/foodItems"
-    food-items-list-url: "${lncr.internal-url}/foodItems/listIds"
-    kitchen-orders-url: "${lncr.internal-url}/kitchenOrders"
-    payments-url: "${lncr.internal-url}/payments/mercadoPago"
-    notification-url: "${lncr.internal-url}/notifications"
+    customersUrl: "${lncr.internalUrl}/customers"
+    customerOrdersUrl: "${lncr.internalUrl}/customerOrders"
+    foodItemsUrl: "${lncr.internalUrl}/foodItems"
+    kitchenOrdersUrl: "${lncr.internalUrl}/kitchenOrders"
+    paymentsUrl: "${lncr.internalUrl}/payments"
+    notificationUrl: "${lncr.internalUrl}/notifications"
   customer-order:
-    location-prefix: "${lncr.internal-url}/customerOrders"
+    location-prefix: "${lncr.internalUrl}/customerOrders"
 
 
