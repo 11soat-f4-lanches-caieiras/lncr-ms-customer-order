@@ -41,12 +41,6 @@ ingress:
   tls: []
 
 
-##Storage
-storage:
-  fsx:
-    server: "10.1.46.136"
-    path: "/fsx"
-
 #Deployment
 resources:
   lanchesCaieirasApp:
