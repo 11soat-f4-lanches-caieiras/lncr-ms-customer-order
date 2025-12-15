@@ -6,6 +6,7 @@ import br.com.tp.lncr.commons.integrations.fooditem.FoodItemIntegrationImpl;
 import br.com.tp.lncr.commons.integrations.kitchenorder.KitchenOrderIntegrationImpl;
 import br.com.tp.lncr.commons.integrations.notifcation.NotificationIntegraionImpl;
 import br.com.tp.lncr.commons.integrations.payment.PaymentIntegrationImpl;
+import br.com.tp.lncr.core.dtos.customer.CustomerDTO;
 import br.com.tp.lncr.core.dtos.customerorder.CustomerOrderCustomerDTO;
 import br.com.tp.lncr.core.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lncr.core.dtos.customerorder.CustomerOrderFoodItemDTO;
@@ -72,7 +73,8 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     @Transactional(readOnly = true)
     @Override
     public CustomerOrderCustomerDTO findCustomerDetails(Integer customerId) {
-        return this.integrationMapper.toCustomerOrderCustomerDTO(this.customerIntegration.getCustomerDetails(customerId));
+        CustomerDTO customerDTO = this.customerIntegration.getCustomerDetails(customerId);
+        return this.integrationMapper.toCustomerOrderCustomerDTO(customerDTO);
     }
 
     @Override
