@@ -74,7 +74,8 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     @Override
     public CustomerOrderCustomerDTO findCustomerDetails(Integer customerId) {
         CustomerDTO customerDTO = this.customerIntegration.getCustomerDetails(customerId);
-        return this.integrationMapper.toCustomerOrderCustomerDTO(customerDTO);
+        if (customerDTO == null) return null;
+        return new CustomerOrderCustomerDTO(customerDTO.getId(), customerDTO.getName());
     }
 
     @Override
