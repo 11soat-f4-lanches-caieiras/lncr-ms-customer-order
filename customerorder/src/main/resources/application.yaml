@@ -33,7 +33,7 @@ lncr:
     customerOrdersUrl: "${lncr.internalUrl}/customerOrders"
     foodItemsUrl: "${lncr.internalUrl}/foodItems"
     kitchenOrdersUrl: "${lncr.internalUrl}/kitchenOrders"
-    paymentsUrl: "${lncr.internalUrl}/payments"
+    paymentsUrl: "${lncr.internalUrl}/payments/mercadoPago"
     notificationUrl: "${lncr.internalUrl}/notifications"
   customer-order:
     location-prefix: "${lncr.internalUrl}/customerOrders"
