@@ -1,10 +1,12 @@
 package br.com.tp.lncr.customerorder.dataproxy;
 
+import br.com.tp.lncr.commons.integrations.IntegrationMapper;
 import br.com.tp.lncr.commons.integrations.customer.CustomerIntegrationImpl;
 import br.com.tp.lncr.commons.integrations.fooditem.FoodItemIntegrationImpl;
 import br.com.tp.lncr.commons.integrations.kitchenorder.KitchenOrderIntegrationImpl;
 import br.com.tp.lncr.commons.integrations.notifcation.NotificationIntegraionImpl;
 import br.com.tp.lncr.commons.integrations.payment.PaymentIntegrationImpl;
+import br.com.tp.lncr.core.dtos.customer.CustomerDTO;
 import br.com.tp.lncr.core.dtos.customerorder.CustomerOrderCustomerDTO;
 import br.com.tp.lncr.core.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lncr.core.dtos.customerorder.CustomerOrderFoodItemDTO;
@@ -50,6 +52,7 @@ class CustomerOrderDataProxyTest {
     private JpaCustomerOrderMapper jpaCustomerOrderMapper;
 
     private CustomerOrderDataProxy customerOrderDataProxy;
+    private IntegrationMapper integrationMapper;
 
     @BeforeEach
     void setUp() {
@@ -63,7 +66,8 @@ class CustomerOrderDataProxyTest {
                 paymentIntegration,
                 kitchenOrderIntegration,
                 notificationIntegration,
-                jpaCustomerOrderMapper
+                jpaCustomerOrderMapper,
+                integrationMapper
         );
     }
 
@@ -118,13 +122,17 @@ class CustomerOrderDataProxyTest {
     @Test
     void shouldReturnCustomerDetailsWhenValidId() {
         Integer customerId = 1;
-        CustomerOrderCustomerDTO expectedCustomer = new CustomerOrderCustomerDTO();
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(customerId);
+        customerDTO.setName("Test Customer");
 
-        Mockito.when(customerIntegration.getCustomerDetails(customerId)).thenReturn(expectedCustomer);
+        Mockito.when(customerIntegration.getCustomerDetails(customerId)).thenReturn(customerDTO);
 
         CustomerOrderCustomerDTO result = customerOrderDataProxy.findCustomerDetails(customerId);
 
         Assertions.assertNotNull(result);
+        Assertions.assertEquals(customerId, result.getId());
+        Assertions.assertEquals("Test Customer", result.getName());
         Mockito.verify(customerIntegration).getCustomerDetails(customerId);
     }
 

@@ -1,10 +1,12 @@
 package br.com.tp.lncr.customerorder.dataproxy;
 
+import br.com.tp.lncr.commons.integrations.IntegrationMapper;
 import br.com.tp.lncr.commons.integrations.customer.CustomerIntegrationImpl;
 import br.com.tp.lncr.commons.integrations.fooditem.FoodItemIntegrationImpl;
 import br.com.tp.lncr.commons.integrations.kitchenorder.KitchenOrderIntegrationImpl;
 import br.com.tp.lncr.commons.integrations.notifcation.NotificationIntegraionImpl;
 import br.com.tp.lncr.commons.integrations.payment.PaymentIntegrationImpl;
+import br.com.tp.lncr.core.dtos.customer.CustomerDTO;
 import br.com.tp.lncr.core.dtos.customerorder.CustomerOrderCustomerDTO;
 import br.com.tp.lncr.core.dtos.customerorder.CustomerOrderDTO;
 import br.com.tp.lncr.core.dtos.customerorder.CustomerOrderFoodItemDTO;
@@ -30,6 +32,7 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     private final KitchenOrderIntegrationImpl kitchenOrderIntegration;
     private final NotificationIntegraionImpl notificationIntegration;
     private final JpaCustomerOrderMapper jpaCustomerOrderMapper;
+    private final IntegrationMapper integrationMapper;
 
     public CustomerOrderDataProxy(JpaCustomerOrderRepositoryImpl jpaCustomerOrderRepositoryImpl,
                                   JpaCustomerOrderRepository jpaCustomerOrderRepository,
@@ -40,7 +43,8 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
                                   PaymentIntegrationImpl paymentIntegration,
                                   KitchenOrderIntegrationImpl kitchenOrderIntegration,
                                   NotificationIntegraionImpl notificationIntegration,
-                                  JpaCustomerOrderMapper jpaCustomerOrderMapper) {
+                                  JpaCustomerOrderMapper jpaCustomerOrderMapper,
+                                  IntegrationMapper integrationMapper) {
         this.jpaCustomerOrderRepositoryImpl = jpaCustomerOrderRepositoryImpl;
         this.jpaCustomerOrderRepository = jpaCustomerOrderRepository;
         this.jpaCustomerOrderFoodItemRepositoryImpl = jpaCustomerOrderFoodItemRepositoryImpl;
@@ -51,6 +55,7 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
         this.kitchenOrderIntegration = kitchenOrderIntegration;
         this.notificationIntegration = notificationIntegration;
         this.jpaCustomerOrderMapper = jpaCustomerOrderMapper;
+        this.integrationMapper = integrationMapper;
     }
 
     @Transactional(readOnly = true)
@@ -68,7 +73,9 @@ public class CustomerOrderDataProxy implements CustomerOrderDatabase {
     @Transactional(readOnly = true)
     @Override
     public CustomerOrderCustomerDTO findCustomerDetails(Integer customerId) {
-        return this.customerIntegration.getCustomerDetails(customerId);
+        CustomerDTO customerDTO = this.customerIntegration.getCustomerDetails(customerId);
+        if (customerDTO == null) return null;
+        return new CustomerOrderCustomerDTO(customerDTO.getId(), customerDTO.getName());
     }
 
     @Override
