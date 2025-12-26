@@ -30,7 +30,7 @@ Microserviço responsável pelo gerenciamento de **Pedidos de Clientes** no sist
 
 ## Sonar Quality Gate
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=11soat-f4-lanches-caieiras_lncr-ms-customer-order&metric=alert_status)](https://sonarcloud.io/project/overview?id=11soat-f4-lanches-caieiras_lncr-ms-customer-order)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=11soat-f4-lanches-caieiras_lncr-ms-customer-order&metric=alert_status&token=ef14442d80b6b8929b2cd0046280743d5ff20de9)](https://sonarcloud.io/summary/new_code?id=11soat-f4-lanches-caieiras_lncr-ms-customer-order)
 
 Acesse o dashboard completo: [SonarCloud - lncr-ms-customer-order](https://sonarcloud.io/project/overview?id=11soat-f4-lanches-caieiras_lncr-ms-customer-order)
 
